@@ -13,7 +13,7 @@ public class Main : Node
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        NewGame();
+
     }
 
     // We'll use this later because C# doesn't support GDScript's randi().
@@ -28,16 +28,32 @@ public class Main : Node
         GetNode<Timer>("MobTimer").Stop();
         GetNode<Timer>("ScoreTimer").Stop();
 
+        GetNode<HUD>("HUD").ShowGameOver();
+
+        //GD.Print("call Group");
+        GetTree().CallGroup("mobs", "queue_free");
+
+        GetNode<AudioStreamPlayer>("Music").Stop();
+        GetNode<AudioStreamPlayer>("DeathSound").Play();
+
+
     }
 
     public void NewGame()
     {
+
+        GetNode<AudioStreamPlayer>("Music").Play();
+
         _score = 0;
         Player player = GetNode<Player>("Player");
         Position2D startPosition = GetNode<Position2D>("StartPosition");
         player.Start(startPosition.Position);
 
         GetNode<Timer>("StartTimer").Start();
+
+        HUD hud = GetNode<HUD>("HUD");
+        hud.UpdateScore(_score);
+        hud.ShowMessage("Get Ready!");
     }
 
     public void _on_StartTimer_timeout()
@@ -49,6 +65,7 @@ public class Main : Node
     public void _on_ScoreTimer_timeout()
     {
         _score++;
+        GetNode<HUD>("HUD").UpdateScore(_score);
     }
 
     public void _on_MobTimer_timeout()

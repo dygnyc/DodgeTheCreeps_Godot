@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://art/playerGrey_up2.png" type="Texture" id=1]
 [ext_resource path="res://art/playerGrey_walk2.png" type="Texture" id=2]
@@ -23,6 +23,11 @@ animations = [ {
 radius = 54.0
 height = 24.0
 
+[sub_resource type="Curve" id=3]
+min_value = -0.42
+max_value = 0.41
+_data = [ Vector2( 0.188312, 0.41 ), 0.0, 0.0, 0, 0, Vector2( 1, -0.218108 ), 0.0, 0.0, 0, 0 ]
+
 [node name="Player" type="Area2D"]
 script = ExtResource( 5 )
 __meta__ = {
@@ -37,5 +42,18 @@ animation = "up"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2( 0.5, 0.5 )
 shape = SubResource( 2 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+visible = false
+position = Vector2( 0.168, 0.14 )
+amount = 3
+lifetime = 2.0
+speed_scale = 10.0
+explosiveness = 1.0
+randomness = 1.0
+texture = ExtResource( 4 )
+direction = Vector2( 100, -100 )
+scale_amount_curve = SubResource( 3 )
+color = Color( 1, 1, 1, 0.32549 )
 
 [connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]

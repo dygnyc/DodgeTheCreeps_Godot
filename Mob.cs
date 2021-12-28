@@ -23,11 +23,18 @@ public class Mob : RigidBody2D
 
     public void _on_VisibilityNotifier2D_screen_exited()
     {
+        //after exiting screen, mob should be destroyed
+
+    //    int mobsCount = GetTree().GetNodesInGroup("mobs").Count;
+    //    GD.Print("mobs count: "+mobsCount);
+    //      just wanted to check to make sure mobs were being destroyed
+    //      by getting the count of mob nodes
+
         QueueFree();
     }
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
+    //  public override void _Process(float delta)
+    //  {
+    //      
+    //  }
 }
